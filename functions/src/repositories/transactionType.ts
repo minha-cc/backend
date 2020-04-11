@@ -6,7 +6,8 @@ export class TransactionTypeRepository {
   }
 
   async getById(userId: string, id: string) {
-    return this.transactionTypeReference(userId).doc(id)
+    const cartDoc = await this.transactionTypeReference(userId).doc(id).get()
+    return cartDoc.data()
   }
 
   private transactionTypeReference(userId: string) {

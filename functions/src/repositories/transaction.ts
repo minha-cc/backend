@@ -32,9 +32,14 @@ export class TransactionRepository {
       date: '',
       description: '',
       value: 0.0,
-      transactionType: '',
-      newTransaction: true,
-      disableFields: false
+      transactionTypeId: '',
+      actions: {
+        newTransaction: true,
+        disableFields: false,
+        saving: false,
+        removing: false,
+        editing: true
+      }
     }
   }
 }
