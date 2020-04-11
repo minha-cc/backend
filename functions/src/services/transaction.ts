@@ -39,7 +39,7 @@ export class Transaction {
 
   async remove(data: any, context: any): Promise<any> {
     const referencePeriod = data.referencePeriod
-    const transaction = data.transaction
+    const transaction = { ...data.transaction }
     await transactionRepository.remove(context.auth.uid, referencePeriod, transaction)
   }
 
