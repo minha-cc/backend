@@ -24,16 +24,28 @@ export class Transaction {
     const userId = context.auth.uid
     await transactionRepository.save(userId, referencePeriod, transaction)
 
+    // update incomes/ outcomes
     const transactionType = await transactionTypeRepository.getById(userId, transaction.transactionTypeId)
     const cart = await cartRepository.get(userId, referencePeriod)
+    const transactionValue = parseFloat(transaction.value.replace(/,/g, '.'))
     if (cart) {
-      const transactionValue = parseFloat(transaction.value.replace(/,/g, '.'))
-      if (transactionType && transactionType.type === 'íncomes') {
-        cart.income += transactionValue
-      } else {
-        cart.outcome += transactionValue
+      if (transactionType) {
+        if (transactionType._type === 'incomes') {
+          cart.income += transactionValue
+        } else {
+          const outcome = cart.outcome += transactionValue
+          const transactionGroups = ['essential', 'whises', 'savings']
+
+          for(const transactionGroup of transactionGroups) {
+            let transactionGroupValue = cart[transactionGroup].value
+            if (transactionType.group === transactionGroup) {
+              transactionGroupValue = cart[transactionGroup].value += transactionValue
+            }
+            cart[transactionGroup].percentage = (transactionGroupValue / outcome) * 100
+          }
+        }
+        await cartRepository.save(userId, referencePeriod, cart)
       }
-      await cartRepository.save(userId, referencePeriod, cart)
     }
   }
 
