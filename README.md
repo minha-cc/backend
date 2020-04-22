@@ -2,6 +2,7 @@
 
 ## Overall project structure:
 
+````
 / repositories
 |-- cart.ts: responsible for cart model on firestore database
 |-- transaction.ts: responsible for transaction model on firestore database
@@ -11,6 +12,7 @@
      createEmpty: that will be create an empty transaction;
      save: that will persist the transaction on database, also will orchestrate other business rules
 / index.ts: will expose all callable endpoints
+````
 
 ## Environment:
 * Firebase Functions
