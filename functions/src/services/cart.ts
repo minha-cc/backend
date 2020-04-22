@@ -15,7 +15,7 @@ export class Cart {
     }
   }
 
-  private async updateCart(transactionType: any, cart: any, transactionValue: any) {
+  private async updateCart(transactionType: any, cart: any, transactionValue: number) {
     if (transactionType._type === 'incomes') {
       cart.income += transactionValue
       return cart
