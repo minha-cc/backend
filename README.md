@@ -9,7 +9,7 @@
 |-- transactionType.ts: responsible for transaction type model on firestore database
 / services
 |-- transaction.ts: has two public methods that should be called by app clients:
-     createEmpty: that will be create an empty transaction;
+     createEmpty: that will create an empty transaction;
      save: that will persist the transaction on database, also will orchestrate other business rules
 / index.ts: will expose all callable endpoints
 ````
