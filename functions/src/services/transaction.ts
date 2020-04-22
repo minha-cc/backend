@@ -27,6 +27,8 @@ export class Transaction {
   async remove(data: any, context: any): Promise<any> {
     const referencePeriod = data.referencePeriod
     const transaction = { ...data.transaction }
-    await transactionRepository.remove(context.auth.uid, referencePeriod, transaction)
+    const userId = context.auth.uid
+    await transactionRepository.remove(userId, referencePeriod, transaction)
+    await cart.update(userId, referencePeriod, transaction, 'remove')
   }
 }

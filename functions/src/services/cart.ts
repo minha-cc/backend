@@ -5,10 +5,13 @@ const transactionTypeRepository = new TransactionTypeRepository()
 const cartRepository = new CartRepository()
 
 export class Cart {
-  async update(userId: string, referencePeriod: string, transaction: any) {
+  async update(userId: string, referencePeriod: string, transaction: any, operation?: string) {
     const transactionType = await transactionTypeRepository.getById(userId, transaction.transactionTypeId)
     let cart = await cartRepository.get(userId, referencePeriod)
-    const transactionValue = parseFloat(transaction.value.replace(/,/g, '.'))
+    let transactionValue = parseFloat(transaction.value.replace(/,/g, '.'))
+    if (operation && operation === 'remove') {
+      transactionValue = -transactionValue
+    }
     if (cart) {
       cart = await this.updateCart(transactionType, cart, transactionValue)
       await cartRepository.save(userId, referencePeriod, cart)
