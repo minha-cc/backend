@@ -36,7 +36,7 @@ export class Cart {
       if (transactionType.group === transactionGroup) {
         transactionGroupValue = cart[transactionGroup].value += transactionValue
       }
-      cart[transactionGroup].percentage = (transactionGroupValue / outcome) * 100
+      cart[transactionGroup].percentage = (transactionGroupValue / outcome) * 100 || 0.0
     }
     return cart
   }
